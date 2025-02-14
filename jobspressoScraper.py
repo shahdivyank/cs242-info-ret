@@ -55,7 +55,7 @@ def getJobLinks(tries):
         if jobUrl:
             jobLinks.add(jobUrl)
     
-    print(f"Found {len(jobLinks)} job links.")
+    print(f"{len(jobLinks)} job links.")
     
     with open("jobspressoLinks.json", "r+", encoding="utf-8") as file:
         try:
@@ -76,7 +76,6 @@ def getJobDetails(jobUrl):
     response = requests.get(jobUrl, headers=HEADERS)
     
     if response.status_code == 200:
-        print("Parsing: ", jobUrl)
         soup = BeautifulSoup(response.text, "html.parser")
 
         title = soup.find("h1", class_="page-title").get_text(strip=True) if soup.find("h1", class_="page-title") else "N/A"
@@ -122,11 +121,11 @@ def getJobDetails(jobUrl):
 jobsFound = getJobLinks(1)
 print(jobsFound)
 
-# with open("jobspressoLinks.json", "r", encoding="utf-8") as file:
-#     jobsFound = json.load(file)
+with open("jobspressoLinks.json", "r", encoding="utf-8") as file:
+    jobsFound = json.load(file)
 
-# for link in jobsFound:
-#     getJobDetails(link)
+for link in jobsFound:
+    getJobDetails(link)
 
 
 # getJobDetails("https://jobspresso.co/job/technical-customer-support-advocate/")
