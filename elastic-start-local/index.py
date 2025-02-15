@@ -1,5 +1,7 @@
 from elasticsearch import Elasticsearch
 import json
+import numpy as np
+from datetime import datetime
 
 es = Elasticsearch(
   "http://localhost:9200",
@@ -7,10 +9,18 @@ es = Elasticsearch(
   verify_certs=False
 )
 
+TOTAL_DOCUMENTS = 137375
+
+times = np.zeros(TOTAL_DOCUMENTS)
+
 with open("data.json", "r") as contents:
     jobs = json.load(contents)
 
-    for job in jobs:
+    start = datetime.now()
+
+    for index in range(TOTAL_DOCUMENTS):
+        job = jobs[index]
+
         es.index(
             index="jobs",
             document={
@@ -22,3 +32,7 @@ with open("data.json", "r") as contents:
                 "location": job["Location"],
             }
         )
+
+        times[index] = (datetime.now() - start).total_seconds()
+
+np.save('times.npy', times)
