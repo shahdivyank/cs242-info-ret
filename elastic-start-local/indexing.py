@@ -1,6 +1,7 @@
 from elasticsearch import Elasticsearch
 import json
 import sys
+import os
 
 input_file = sys.argv[1]
 analyzer_option = sys.argv[2]
@@ -15,8 +16,8 @@ else:
     print(f"Starting indexing without removing stopwords.")
 
 es = Elasticsearch(
-  "http://localhost:9200",
-  api_key="X2NfVTdKUUJWektYUHh1U2FYcWI6d0VJTTJhdjFUNWE3c1pMVWRKX0dPQQ==",
+  os.getenv("ES_LOCAL_URL"),
+  api_key=os.getenv("ES_LOCAL_API_KEY"),
   verify_certs=False
 )
 
