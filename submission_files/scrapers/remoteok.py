@@ -17,18 +17,20 @@ BASE_URL = "https://remoteok.com/?compact=true&order_by=date"
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36"
 }
-#https://www.selenium.dev/documentation/webdriver/waits/
-#https://selenium-python.readthedocs.io/waits.html
-#https://stackoverflow.com/questions/46920243/how-to-configure-chromedriver-to-initiate-chrome-browser-in-headless-mode-throug
-#https://stackoverflow.com/questions/78614995/selenium-xpath-how-do-i-click-on-the-load-more-button
-#https://stackoverflow.com/questions/53527313/webdriverwait-on-finding-element-by-css-selector
-
-options = webdriver.ChromeOptions()
-options.add_argument("--headless")  
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
 def getJobLinks():
     jobLinks = set()
+
+    #https://www.selenium.dev/documentation/webdriver/waits/
+    #https://selenium-python.readthedocs.io/waits.html
+    #https://stackoverflow.com/questions/46920243/how-to-configure-chromedriver-to-initiate-chrome-browser-in-headless-mode-throug
+    #https://stackoverflow.com/questions/78614995/selenium-xpath-how-do-i-click-on-the-load-more-button
+    #https://stackoverflow.com/questions/53527313/webdriverwait-on-finding-element-by-css-selector
+
+    options = webdriver.ChromeOptions()
+    options.add_argument("--headless")  
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+
     driver.get(BASE_URL)
     wait = WebDriverWait(driver, 5)
 
@@ -66,6 +68,9 @@ def getJobLinks():
 
 
 def getJobDetails(jobUrl):
+    options = webdriver.ChromeOptions()
+    options.add_argument("--headless")  
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
     driver.get(jobUrl)
     time.sleep(1)
 
@@ -113,7 +118,7 @@ def getJobDetails(jobUrl):
 
 
 jobsFound = getJobLinks()
-print(jobsFound)
+#print(jobsFound)
 
 with open("remoteokLinks.json", "r", encoding="utf-8") as file:
     jobsFound = json.load(file)

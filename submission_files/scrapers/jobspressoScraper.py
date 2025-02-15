@@ -105,8 +105,8 @@ def getJobDetails(jobUrl):
     
     return None
 
-jobsFound = getJobLinks(1)
-print(jobsFound)
+jobsFound = getJobLinks(5)
+#print(jobsFound)
 
 with open("jobspressoLinks.json", "r", encoding="utf-8") as file:
     jobsFound = json.load(file)
