@@ -1,9 +1,10 @@
 from elasticsearch import Elasticsearch
 import json
+import os
 
 es = Elasticsearch(
-  "http://localhost:9200",
-  api_key="X2NfVTdKUUJWektYUHh1U2FYcWI6d0VJTTJhdjFUNWE3c1pMVWRKX0dPQQ==",
+  os.getenv("ES_LOCAL_URL"),
+  api_key=os.getenv("ES_LOCAL_API_KEY"),
   verify_certs=False
 )
 
