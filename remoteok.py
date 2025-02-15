@@ -21,6 +21,7 @@ HEADERS = {
 #https://selenium-python.readthedocs.io/waits.html
 #https://stackoverflow.com/questions/46920243/how-to-configure-chromedriver-to-initiate-chrome-browser-in-headless-mode-throug
 #https://stackoverflow.com/questions/78614995/selenium-xpath-how-do-i-click-on-the-load-more-button
+#https://stackoverflow.com/questions/53527313/webdriverwait-on-finding-element-by-css-selector
 
 options = webdriver.ChromeOptions()
 options.add_argument("--headless")  
