@@ -2,11 +2,10 @@ from elasticsearch import Elasticsearch
 import json
 import numpy as np
 from datetime import datetime
-import os
 
 es = Elasticsearch(
-  os.getenv("ES_LOCAL_URL"),
-  api_key=os.getenv("ES_LOCAL_API_KEY"),
+  "http://localhost:9200",
+  api_key="WUZGR0I1VUJvWGQ5UUk0ZngxWkQ6Wm16NVk0M1ZSUTZtQXNSQ01EbEpYUQ==",
   verify_certs=False
 )
 

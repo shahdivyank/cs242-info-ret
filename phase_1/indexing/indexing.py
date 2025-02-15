@@ -3,7 +3,6 @@ import json
 import sys
 import numpy as np
 from datetime import datetime
-import os
 
 
 input_file = sys.argv[1]
@@ -23,8 +22,8 @@ else:
     print(f"Starting indexing without removing stopwords.")
 
 es = Elasticsearch(
-  os.getenv("ES_LOCAL_URL"),
-  api_key=os.getenv("ES_LOCAL_API_KEY"),
+  "http://localhost:9200",
+  api_key="WUZGR0I1VUJvWGQ5UUk0ZngxWkQ6Wm16NVk0M1ZSUTZtQXNSQ01EbEpYUQ==",
   verify_certs=False
 )
 

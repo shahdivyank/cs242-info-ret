@@ -1,7 +1,7 @@
 import glob
 import json
 
-files = glob.glob("../job_listings_by_role*.json")
+files = glob.glob("./data/job_listings_by_role*.json")
 
 data = []
 
