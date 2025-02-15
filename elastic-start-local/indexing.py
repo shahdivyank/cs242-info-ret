@@ -1,11 +1,17 @@
 from elasticsearch import Elasticsearch
 import json
 import sys
+import numpy as np
+from datetime import datetime
 
 input_file = sys.argv[1]
 analyzer_option = sys.argv[2]
 print(input_file)
 print(analyzer_option)
+
+TOTAL_DOCUMENTS = 137375
+
+times = np.zeros(TOTAL_DOCUMENTS)
 
 if analyzer_option == "remove_stopwords":
     remove_stopwords = True
@@ -16,7 +22,7 @@ else:
 
 es = Elasticsearch(
   "http://localhost:9200",
-  api_key="X2NfVTdKUUJWektYUHh1U2FYcWI6d0VJTTJhdjFUNWE3c1pMVWRKX0dPQQ==",
+  api_key="WUZGR0I1VUJvWGQ5UUk0ZngxWkQ6Wm16NVk0M1ZSUTZtQXNSQ01EbEpYUQ==",
   verify_certs=False
 )
 
@@ -28,7 +34,10 @@ stop_words = [
 with open(input_file, "r", encoding="utf-8", errors="ignore") as contents:
     jobs = json.load(contents)
 
-    for job in jobs:
+    start = datetime.now()
+
+    for index in range(TOTAL_DOCUMENTS):
+        job = jobs[index]
         description = job["Description"]
         if remove_stopwords:
             description = ' '.join([word for word in description.split() if word.lower() not in stop_words])
@@ -44,3 +53,7 @@ with open(input_file, "r", encoding="utf-8", errors="ignore") as contents:
                 "location": job["Location"],
             }
         )
+
+        times[index] = (datetime.now() - start).total_seconds()
+
+np.save('stopwords.npy', times)
