@@ -2,3 +2,5 @@
 data.json
 .DS_Store
 __pycache__
+phase_2/bert.index
+phase_2/bert_index
