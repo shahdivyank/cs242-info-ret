@@ -1,21 +1,16 @@
-from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_core.documents import Document
 from langchain_community.vectorstores import FAISS
-import faiss
-from langchain_community.docstore.in_memory import InMemoryDocstore
-import json
-import numpy as np
-from datetime import datetime
+from langchain_huggingface import HuggingFaceEmbeddings
 
-bert_index = faiss.IndexFlatL2(768)
 
 bert = HuggingFaceEmbeddings(
     model_name="google-bert/bert-base-uncased",
 )
 
-bert_vectorstore = FAISS(
-    embedding_function=bert,
-    index=bert_index,
-    docstore=InMemoryDocstore(),
-    index_to_docstore_id={},
+vectorstore = FAISS.load_local(
+    "/Users/shahdivyank/Desktop/CS242/cs242-info-ret/phase_2/bert_index", bert, allow_dangerous_deserialization=True
 )
+
+
+results = vectorstore.search("frontend", k=5, search_type="similarity")
+
+print(results)

@@ -17,7 +17,7 @@ bert_vectorstore = FAISS(
     index_to_docstore_id={},
 )
 
-with open("../phase_1/indexing/data.json", "r", encoding="utf-8", errors="ignore") as contents:
+with open("/Users/shahdivyank/Desktop/CS242/cs242-info-ret/phase_1/data.json", "r", encoding="utf-8", errors="ignore") as contents:
     jobs = json.load(contents)
 
 TOTAL_DOCUMENTS = len(jobs)
@@ -31,9 +31,14 @@ for i in range(0, TOTAL_DOCUMENTS, BATCH_SIZE):
 
     documents = [
         Document(
-            id=job["Application Link"],
-            page_content=job["Description"],
-            metadata={"title": job["Title"], "location": job["Location"]},
+            id = job["Application Link"],
+            page_content = job["Title"] + job["Description"],
+            metadata={
+                "title": job["Title"], 
+                "location": job["Location"], 
+                "link": job["Application Link"], 
+                "qualification": job["Qualification"], 
+                "responsibility": job["Responsibility"]},
         )
         for job in batch_jobs
     ]
@@ -42,8 +47,8 @@ for i in range(0, TOTAL_DOCUMENTS, BATCH_SIZE):
     times[i : i + len(batch_jobs)] = (datetime.now() - start).total_seconds()
     print(f"Indexed {i + len(batch_jobs)}/{TOTAL_DOCUMENTS} documents.")
 
-np.save("bert_embeddings_indexing.npy", times)
+np.save("bert_embeddings_batches_indexing.npy", times)
 
-bert_vectorstore.save_local("bert_index")
+bert_vectorstore.save_local("bert_index_batches")
 
 print("Indexing complete. Saved FAISS index and metadata.")

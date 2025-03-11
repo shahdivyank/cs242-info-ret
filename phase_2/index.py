@@ -24,7 +24,7 @@ TOTAL_DOCUMENTS = 137375
 
 times = np.zeros(TOTAL_DOCUMENTS)
 
-with open("../phase_1/indexing/data.json", "r", encoding="utf-8", errors="ignore") as contents:
+with open("/Users/shahdivyank/Desktop/CS242/cs242-info-ret/phase_1/data.json", "r", encoding="utf-8", errors="ignore") as contents:
     jobs = json.load(contents)
 
     times = np.zeros(TOTAL_DOCUMENTS)
@@ -38,8 +38,13 @@ with open("../phase_1/indexing/data.json", "r", encoding="utf-8", errors="ignore
 
         document = Document(
             id = job["Application Link"],
-            page_content= job["Description"],
-            metadata={"title": job["Title"], "location": job["Location"]},
+            page_content = job["Title"] + job["Description"],
+            metadata={
+                "title": job["Title"], 
+                "location": job["Location"], 
+                "link": job["Application Link"], 
+                "qualification": job["Qualification"], 
+                "responsibility": job["Responsibility"]},
         )
 
         bert_vectorstore.add_documents(documents = [document])
