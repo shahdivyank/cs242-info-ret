@@ -21,7 +21,7 @@ with open("/Users/shahdivyank/Desktop/CS242/cs242-info-ret/phase_1/data.json", "
     jobs = json.load(contents)
 
 TOTAL_DOCUMENTS = len(jobs)
-BATCH_SIZE = 1000
+BATCH_SIZE = 500
 times = np.zeros(TOTAL_DOCUMENTS)
 start = datetime.now()
 
@@ -47,8 +47,8 @@ for i in range(0, TOTAL_DOCUMENTS, BATCH_SIZE):
     times[i : i + len(batch_jobs)] = (datetime.now() - start).total_seconds()
     print(f"Indexed {i + len(batch_jobs)}/{TOTAL_DOCUMENTS} documents.")
 
-np.save("bert_embeddings_batches_indexing.npy", times)
+np.save("bert_embeddings_batches_500_indexing.npy", times)
 
-bert_vectorstore.save_local("bert_index_batches")
+bert_vectorstore.save_local("bert_index_batches_500")
 
 print("Indexing complete. Saved FAISS index and metadata.")
