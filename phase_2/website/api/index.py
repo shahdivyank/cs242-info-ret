@@ -3,6 +3,7 @@ from flask_cors import CORS
 from langchain_community.vectorstores import FAISS
 from langchain_huggingface import HuggingFaceEmbeddings
 import json
+from urllib.parse import unquote
 
 app = Flask(__name__)
 CORS(app)
@@ -18,15 +19,22 @@ vectorstore = FAISS.load_local(
 @app.route("/api/query", methods=["GET"])
 def query():
     q = request.args.get('q')
+    size = request.args.get('size')
+    location = request.args.get('location')
 
-    results = vectorstore.search(q, k=5, search_type="similarity")
+    print(q)
 
+    results = vectorstore.similarity_search_with_score(unquote(q), 
+                                 k=int(size), 
+                                 filter = {'location': unquote(location) } if location else {} 
+                                 )
+    
     output = []
 
-    print(results)
-
-    for result in results:
+    for result, score in results:
+        print(score, type(score), float(score))
         output.append({
+            "score": score.item(),
             "metadata": result.metadata,
             "page_content": result.page_content
         })
