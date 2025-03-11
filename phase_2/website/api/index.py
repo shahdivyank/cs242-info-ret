@@ -12,7 +12,7 @@ bert = HuggingFaceEmbeddings(
 )
 
 vectorstore = FAISS.load_local(
-    "/Users/shahdivyank/Desktop/cs242-info-ret/phase_2/bert_index", bert, allow_dangerous_deserialization=True
+    "/Users/shahdivyank/Desktop/CS242/cs242-info-ret/phase_2/bert_index", bert, allow_dangerous_deserialization=True
 )
 
 @app.route("/api/query", methods=["GET"])
@@ -22,6 +22,8 @@ def query():
     results = vectorstore.search(q, k=5, search_type="similarity")
 
     output = []
+
+    print(results)
 
     for result in results:
         output.append({
